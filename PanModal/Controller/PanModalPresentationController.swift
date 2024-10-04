@@ -628,8 +628,7 @@ private extension PanModalPresentationController {
      embedded scrollView's panGestureRecognizer.
      */
     func shouldPrioritize(panGestureRecognizer: UIPanGestureRecognizer) -> Bool {
-        return panGestureRecognizer.state == .began &&
-            presentable?.shouldPrioritize(panModalGestureRecognizer: panGestureRecognizer) == true
+        return presentable?.shouldPrioritize(panModalGestureRecognizer: panGestureRecognizer) == true
     }
 
     /**
