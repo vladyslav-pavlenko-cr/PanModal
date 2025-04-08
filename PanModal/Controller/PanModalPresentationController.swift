@@ -38,7 +38,7 @@ open class PanModalPresentationController: UIPresentationController {
      */
     struct Constants {
         static let indicatorYOffset = CGFloat(8.0)
-        static let snapMovementSensitivity = CGFloat(0.3)
+        static let snapMovementSensitivity = CGFloat(0.7)
         static let dragIndicatorSize = CGSize(width: 36.0, height: 5.0)
     }
 
@@ -635,7 +635,8 @@ private extension PanModalPresentationController {
      Check if the given velocity is within the sensitivity range
      */
     func isVelocityWithinSensitivityRange(_ velocity: CGFloat) -> Bool {
-        return (abs(velocity) - (1000 * (1 - Constants.snapMovementSensitivity))) > 0
+        abs(velocity) > 3000
+        //return (abs(velocity) - (1000 * (1 - Constants.snapMovementSensitivity))) > 0
     }
 
     func snap(toYPosition yPos: CGFloat) {
