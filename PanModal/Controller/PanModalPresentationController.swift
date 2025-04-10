@@ -635,7 +635,31 @@ private extension PanModalPresentationController {
      Check if the given velocity is within the sensitivity range
      */
     func isVelocityWithinSensitivityRange(_ velocity: CGFloat) -> Bool {
-        abs(velocity) > 3000
+        
+        guard let containerView else { return false }
+        
+        let targetYPosition = {
+            let nearestPosition = nearest(
+                to: presentedView.frame.minY,
+                inValues: [longFormYPosition, shortFormYPosition, containerView.bounds.height]
+            )
+            
+            if nearestPosition == shortFormYPosition {
+                return velocity < 0 ? longFormYPosition : 0
+            } else if nearestPosition == longFormYPosition {
+                return velocity > 0 ? shortFormYPosition : 0
+            } else {
+                return containerView.bounds.height
+            }
+        }()
+        
+        let velocityThreshold: CGFloat =
+        targetYPosition == shortFormYPosition
+        || targetYPosition == longFormYPosition
+        ? 750
+        : 3000
+        
+        return abs(velocity) > velocityThreshold
         //return (abs(velocity) - (1000 * (1 - Constants.snapMovementSensitivity))) > 0
     }
 
